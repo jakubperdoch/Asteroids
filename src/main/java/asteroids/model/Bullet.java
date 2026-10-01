@@ -9,8 +9,7 @@ import javafx.scene.canvas.GraphicsContext;
 public class Bullet extends GameObject {
 
     public Bullet(double x, double y) {
-        this.x = x;
-        this.y = y;
+        super(x, y, 5, 5, 0, null);
     }
 
     @Override

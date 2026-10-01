@@ -8,8 +8,7 @@ import javafx.scene.canvas.GraphicsContext;
 public class Asteroid extends GameObject {
 
     public Asteroid(double x, double y) {
-        this.x = x;
-        this.y = y;
+        super(x, y, 50, 50, 0, null);
     }
 
     @Override

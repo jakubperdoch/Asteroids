@@ -7,12 +7,9 @@ import javafx.scene.canvas.GraphicsContext;
  */
 
 public class Ufo extends GameObject {
-    protected double x;
-    protected double y;
-
+    
     public Ufo(double x, double y) {
-        this.x = x;
-        this.y = y;
+        super(x, y, 30, 15, 0, null);
     }
 
     @Override
