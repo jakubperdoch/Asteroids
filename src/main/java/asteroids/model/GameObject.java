@@ -1,5 +1,7 @@
 package asteroids.model;
 
+import javafx.geometry.Point2D;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -10,8 +12,7 @@ import javafx.scene.image.Image;
 public abstract class GameObject {
     private static final double BOUNCE_SPEED = 200;
 
-    protected double x;
-    protected double y;
+    protected Point2D position;
     protected double width;
     protected double height;
     protected double angle;
@@ -20,8 +21,7 @@ public abstract class GameObject {
     protected Image image;
 
     protected GameObject(double x, double y, double width, double height, double angle, Image image) {
-        this.x = x;
-        this.y = y;
+        this.position = new Point2D(x, y);
         this.width = width;
         this.height = height;
         this.angle = angle;
@@ -29,28 +29,24 @@ public abstract class GameObject {
     }
 
     public void update(double dt) {
-        this.x += velocityX * dt;
-        this.y += velocityY * dt;
+        this.position = this.position.add(velocityX * dt, velocityY * dt);
     }
 
     public void draw(GraphicsContext gc) {
         gc.save();
-        gc.translate(x, y);
+        gc.translate(position.getX(), position.getY());
         gc.rotate(getDrawAngle());
         gc.drawImage(image, -width / 2, -height / 2, width, height);
         gc.restore();
     }
 
-    public boolean collidesWith(GameObject other) {
-        double dx = this.x - other.x;
-        double dy = this.y - other.y;
-        double distance = Math.sqrt(dx * dx + dy * dy);
-        return distance < (this.width / 2 + other.width / 2);
+    public Rectangle2D getBoundingBox() {
+        return new Rectangle2D(position.getX(), position.getY(), image.getWidth(), image.getHeight());
     }
 
     public void pushAwayFrom(GameObject other) {
-        double dx = x - other.x;
-        double dy = y - other.y;
+        double dx = position.getX() - other.position.getX();
+        double dy = position.getY() - other.position.getY();
         double distance = Math.sqrt(dx * dx + dy * dy);
         double minDistance = width / 2 + other.width / 2;
 
@@ -58,8 +54,7 @@ public abstract class GameObject {
             return;
         }
 
-        x = other.x + dx / distance * minDistance;
-        y = other.y + dy / distance * minDistance;
+        position = new Point2D(other.position.getX() + dx / distance * minDistance, other.position.getY() + dy / distance * minDistance);
         velocityX = dx / distance * BOUNCE_SPEED;
         velocityY = dy / distance * BOUNCE_SPEED;
     }
@@ -68,16 +63,16 @@ public abstract class GameObject {
         double halfWidth = width / 2;
         double halfHeight = height / 2;
 
-        if (x < -halfWidth) {
-            x = screenWidth + halfWidth;
-        } else if (x > screenWidth + halfWidth) {
-            x = -halfWidth;
+        if (position.getX() < -halfWidth) {
+            position = new Point2D(screenWidth + halfWidth, position.getY());
+        } else if (position.getX() > screenWidth + halfWidth) {
+            position = new Point2D(-halfWidth, position.getY());
         }
 
-        if (y < -halfHeight) {
-            y = screenHeight + halfHeight;
-        } else if (y > screenHeight + halfHeight) {
-            y = -halfHeight;
+        if (position.getY() < -halfHeight) {
+            position = new Point2D(position.getX(), screenHeight + halfHeight);
+        } else if (position.getY() > screenHeight + halfHeight) {
+            position = new Point2D(position.getX(), -halfHeight);
         }
     }
 
@@ -86,10 +81,10 @@ public abstract class GameObject {
     }
 
     public double getX() {
-        return x;
+        return position.getX();
     }
 
     public double getY() {
-        return y;
+        return position.getY();
     }
 }

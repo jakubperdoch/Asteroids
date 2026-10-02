@@ -72,7 +72,7 @@ public class Ship extends GameObject {
         super.draw(gc);
         if (movingForward) {
             gc.save();
-            gc.translate(x, y);
+            gc.translate(position.getX(), position.getY());
             gc.rotate(getDrawAngle());
             gc.drawImage(new Image(Objects.requireNonNull(Ship.class.getResourceAsStream("/images/exhaust.png"))),
                     -width / 2, -height / 4, width, height);
@@ -108,7 +108,7 @@ public class Ship extends GameObject {
             updateHealthImage(health);
         }
     }
-
+    
     public String getHealth() {
         return String.valueOf(health);
     }

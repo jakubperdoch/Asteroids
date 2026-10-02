@@ -94,7 +94,7 @@ public class GameScreen {
         ship.wrap(WIDTH, HEIGHT);
 
         for (Asteroid asteroid : asteroids) {
-            if (ship.collidesWith(asteroid)) {
+            if (asteroid.getBoundingBox().intersects(ship.getBoundingBox())) {
                 ship.takeDamage();
                 ship.pushAwayFrom(asteroid);
             }
