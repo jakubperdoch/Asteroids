@@ -35,7 +35,7 @@ public abstract class GameObject {
     public void draw(GraphicsContext gc) {
         gc.save();
         gc.translate(x, y);
-        gc.rotate(angle);
+        gc.rotate(getDrawAngle());
         gc.drawImage(image, -width / 2, -height / 2, width, height);
         gc.restore();
     }
@@ -55,5 +55,9 @@ public abstract class GameObject {
         } else if (y > screenHeight + halfHeight) {
             y = -halfHeight;
         }
+    }
+
+    protected double getDrawAngle() {
+        return angle;
     }
 }
