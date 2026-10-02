@@ -1,6 +1,7 @@
 package asteroids.model;
 
 import asteroids.input.KeyboardInput;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 
@@ -13,7 +14,6 @@ import java.util.Objects;
 
 public class Ship extends GameObject {
 
-    private static final String IMAGE_PATH = "/images/ship/MainShip-FullHealth.png";
     private static final double SIZE = 70;
     private static final double ROTATION_SPEED = 5;
     private static final double MAX_SPEED = 500;
@@ -24,7 +24,7 @@ public class Ship extends GameObject {
 
     public Ship(double x, double y) {
         super(x, y, SIZE, SIZE, -90,
-                new Image(Objects.requireNonNull(Ship.class.getResourceAsStream(IMAGE_PATH))));
+                new Image(Objects.requireNonNull(Ship.class.getResourceAsStream("/images/ship/MainShip-FullHealth.png"))));
     }
 
     public void handleInput(KeyboardInput input) {
@@ -55,6 +55,19 @@ public class Ship extends GameObject {
             velocityY *= 0.99;
         }
         super.update(dt);
+    }
+
+    @Override
+    public void draw(GraphicsContext gc) {
+        super.draw(gc);
+        if (movingForward) {
+            gc.save();
+            gc.translate(x, y);
+            gc.rotate(getDrawAngle());
+            gc.drawImage(new Image(Objects.requireNonNull(Ship.class.getResourceAsStream("/images/exhaust.png"))),
+                    -width / 2, -height / 4, width, height);
+            gc.restore();
+        }
     }
 
     @Override
