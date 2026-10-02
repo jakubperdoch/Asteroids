@@ -56,11 +56,12 @@ public class GameScreen {
         while (asteroids.size() < count) {
             double x = random.nextDouble() * WIDTH;
             double y = random.nextDouble() * HEIGHT;
+            int imageNumber = random.nextInt(1, 9);
 
             AsteroidSize[] sizes = AsteroidSize.values();
             AsteroidSize size = sizes[random.nextInt(sizes.length)];
-
-            asteroids.add(new Asteroid(x, y, size));
+            
+            asteroids.add(new Asteroid(x, y, size, imageNumber));
         }
     }
 
