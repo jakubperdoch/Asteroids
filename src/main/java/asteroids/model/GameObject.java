@@ -13,6 +13,8 @@ public abstract class GameObject {
     protected double width;
     protected double height;
     protected double angle;
+    protected double velocityX;
+    protected double velocityY;
 
     protected Image image;
 
@@ -25,9 +27,9 @@ public abstract class GameObject {
         this.image = image;
     }
 
-    public void move(double dx, double dy) {
-        this.x += dx;
-        this.y += dy;
+    public void update(double dt) {
+        this.x += velocityX * dt;
+        this.y += velocityY * dt;
     }
 
     public void draw(GraphicsContext gc) {

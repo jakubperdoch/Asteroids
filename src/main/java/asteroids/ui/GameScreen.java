@@ -39,8 +39,19 @@ public class GameScreen {
         spawnAsteroids(5);
 
         AnimationTimer loop = new AnimationTimer() {
+            private long lastTime = 0;
+
             @Override
             public void handle(long now) {
+                if (lastTime == 0) {
+                    lastTime = now;
+                    return;
+                }
+
+                double dt = (now - lastTime) / 1_000_000_000.0;
+                lastTime = now;
+
+                update(dt);
                 render();
             }
         };
@@ -60,17 +71,24 @@ public class GameScreen {
 
             AsteroidSize[] sizes = AsteroidSize.values();
             AsteroidSize size = sizes[random.nextInt(sizes.length)];
-            
+
             asteroids.add(new Asteroid(x, y, size, imageNumber));
+        }
+    }
+
+    private void update(double dt) {
+        for (Asteroid asteroid : asteroids) {
+            asteroid.update(dt);
         }
     }
 
     private void render() {
         gc.drawImage(background, 0, 0, WIDTH, HEIGHT);
-        ship.draw(gc);
         for (Asteroid asteroid : asteroids) {
             asteroid.draw(gc);
         }
+        
+        ship.draw(gc);
     }
 
 }
