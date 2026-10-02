@@ -23,7 +23,6 @@ public class GameScreen {
     private static final double WIDTH = 800;
     private static final double HEIGHT = 600;
     private static final int SAFE_ZONE_RADIUS = 200;
-    private static final double KNOCKBACK_FORCE = 200;
 
 
     private final Scene scene;

@@ -1,5 +1,6 @@
 package asteroids.model;
 
+import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 
 import java.util.Objects;
@@ -21,8 +22,7 @@ public class Asteroid extends GameObject {
         this.rotationSpeed = rotationSpeed;
 
         double radians = Math.toRadians(direction);
-        this.velocityX = size.getSpeed() * Math.cos(radians);
-        this.velocityY = size.getSpeed() * Math.sin(radians);
+        this.velocity = new Point2D(size.getSpeed() * Math.cos(radians), size.getSpeed() * Math.sin(radians));
     }
 
     @Override

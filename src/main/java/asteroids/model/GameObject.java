@@ -16,8 +16,7 @@ public abstract class GameObject {
     protected double width;
     protected double height;
     protected double angle;
-    protected double velocityX;
-    protected double velocityY;
+    protected Point2D velocity;
     protected Image image;
 
     protected GameObject(double x, double y, double width, double height, double angle, Image image) {
@@ -29,7 +28,7 @@ public abstract class GameObject {
     }
 
     public void update(double dt) {
-        this.position = this.position.add(velocityX * dt, velocityY * dt);
+        this.position = this.position.add(velocity.getX() * dt, velocity.getY() * dt);
     }
 
     public void draw(GraphicsContext gc) {
@@ -55,8 +54,7 @@ public abstract class GameObject {
         }
 
         position = new Point2D(other.position.getX() + dx / distance * minDistance, other.position.getY() + dy / distance * minDistance);
-        velocityX = dx / distance * BOUNCE_SPEED;
-        velocityY = dy / distance * BOUNCE_SPEED;
+        velocity = new Point2D(dx / distance * BOUNCE_SPEED, dy / distance * BOUNCE_SPEED);
     }
 
     public void wrap(double screenWidth, double screenHeight) {

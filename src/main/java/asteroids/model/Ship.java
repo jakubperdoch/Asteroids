@@ -20,7 +20,6 @@ public class Ship extends GameObject {
     private static final int MAX_HEALTH = 4;
     private static final double IMMUNITY_DURATION = 2.0;
     private static final double THRUST = 300;
-    private static final double KNOCKBACK_FORCE = 250;
 
     private double immunityTimer = 0;
     private int rotationDirection = 0;
@@ -52,17 +51,14 @@ public class Ship extends GameObject {
         angle += rotationDirection * ROTATION_SPEED * dt;
         if (movingForward) {
             double radians = Math.toRadians(angle);
-            velocityX += Math.cos(radians) * THRUST * dt;
-            velocityY += Math.sin(radians) * THRUST * dt;
+            velocity = velocity.add(Math.cos(radians) * THRUST * dt, Math.sin(radians) * THRUST * dt);
 
-            double speed = Math.sqrt(velocityX * velocityX + velocityY * velocityY);
+            double speed = velocity.magnitude();
             if (speed > MAX_SPEED) {
-                velocityX = velocityX / speed * MAX_SPEED;
-                velocityY = velocityY / speed * MAX_SPEED;
+                velocity = velocity.normalize().multiply(MAX_SPEED);
             }
         } else {
-            velocityX *= 0.99;
-            velocityY *= 0.99;
+            velocity = velocity.multiply(0.99);
         }
         super.update(dt);
     }
@@ -108,7 +104,7 @@ public class Ship extends GameObject {
             updateHealthImage(health);
         }
     }
-    
+
     public String getHealth() {
         return String.valueOf(health);
     }
