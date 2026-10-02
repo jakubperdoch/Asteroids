@@ -30,5 +30,11 @@ public abstract class GameObject {
         this.y += dy;
     }
 
-    public abstract void draw(GraphicsContext gc);
+    public void draw(GraphicsContext gc) {
+        gc.save();
+        gc.translate(x, y);
+        gc.rotate(angle);
+        gc.drawImage(image, -width / 2, -height / 2, width, height);
+        gc.restore();
+    }
 }

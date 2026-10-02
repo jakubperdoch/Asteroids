@@ -1,7 +1,5 @@
 package asteroids.model;
 
-import javafx.scene.canvas.GraphicsContext;
-
 /**
  * Represents a bullet in the game.
  */
@@ -12,7 +10,4 @@ public class Bullet extends GameObject {
         super(x, y, 5, 5, 0, null);
     }
 
-    @Override
-    public void draw(GraphicsContext gc) {
-    }
 }
