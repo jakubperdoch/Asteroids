@@ -39,4 +39,21 @@ public abstract class GameObject {
         gc.drawImage(image, -width / 2, -height / 2, width, height);
         gc.restore();
     }
+
+    public void wrap(double screenWidth, double screenHeight) {
+        double halfWidth = width / 2;
+        double halfHeight = height / 2;
+
+        if (x < -halfWidth) {
+            x = screenWidth + halfWidth;
+        } else if (x > screenWidth + halfWidth) {
+            x = -halfWidth;
+        }
+
+        if (y < -halfHeight) {
+            y = screenHeight + halfHeight;
+        } else if (y > screenHeight + halfHeight) {
+            y = -halfHeight;
+        }
+    }
 }

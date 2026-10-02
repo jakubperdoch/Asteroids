@@ -1,6 +1,7 @@
 package asteroids.ui;
 
 
+import asteroids.input.KeyboardInput;
 import asteroids.model.Asteroid;
 import asteroids.model.AsteroidSize;
 import asteroids.model.Ship;
@@ -28,11 +29,13 @@ public class GameScreen {
     private final Ship ship;
     private final List<Asteroid> asteroids = new ArrayList<>();
     private final Random random = new Random();
+    private final KeyboardInput keyboardInput;
 
     public GameScreen() {
         Canvas canvas = new Canvas(WIDTH, HEIGHT);
         gc = canvas.getGraphicsContext2D();
         scene = new Scene(new StackPane(canvas), WIDTH, HEIGHT);
+        keyboardInput = new KeyboardInput(scene);
 
         background = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/screens/game-screen.png")));
         ship = new Ship(WIDTH / 2, HEIGHT / 2);
@@ -67,18 +70,25 @@ public class GameScreen {
         while (asteroids.size() < count) {
             double x = random.nextDouble() * WIDTH;
             double y = random.nextDouble() * HEIGHT;
+            double direction = random.nextDouble() * 360;
             int imageNumber = random.nextInt(1, 9);
 
             AsteroidSize[] sizes = AsteroidSize.values();
             AsteroidSize size = sizes[random.nextInt(sizes.length)];
+            double rotationSpeed = random.nextDouble(-30, 30);
 
-            asteroids.add(new Asteroid(x, y, size, imageNumber));
+            asteroids.add(new Asteroid(x, y, size, imageNumber, direction, rotationSpeed));
         }
     }
 
     private void update(double dt) {
+        ship.handleInput(keyboardInput);
+        ship.update(dt);
+        ship.wrap(WIDTH, HEIGHT);
+        
         for (Asteroid asteroid : asteroids) {
             asteroid.update(dt);
+            asteroid.wrap(WIDTH, HEIGHT);
         }
     }
 
@@ -87,7 +97,7 @@ public class GameScreen {
         for (Asteroid asteroid : asteroids) {
             asteroid.draw(gc);
         }
-        
+
         ship.draw(gc);
     }
 
