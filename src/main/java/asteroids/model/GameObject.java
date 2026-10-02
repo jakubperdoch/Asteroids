@@ -40,6 +40,19 @@ public abstract class GameObject {
         gc.restore();
     }
 
+    public boolean collidesWith(GameObject other) {
+        double dx = this.x - other.x;
+        double dy = this.y - other.y;
+        double distance = Math.sqrt(dx * dx + dy * dy);
+        return distance < (this.width / 2 + other.width / 2);
+    }
+
+    public void takeKnockBack(double force, double direction) {
+        double radians = Math.toRadians(direction);
+        this.velocityX += force * Math.cos(radians);
+        this.velocityY += force * Math.sin(radians);
+    }
+
     public void wrap(double screenWidth, double screenHeight) {
         double halfWidth = width / 2;
         double halfHeight = height / 2;
@@ -58,6 +71,10 @@ public abstract class GameObject {
     }
 
     protected double getDrawAngle() {
+        return angle;
+    }
+
+    public double getDirection() {
         return angle;
     }
 }

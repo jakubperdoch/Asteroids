@@ -21,7 +21,7 @@ public class GameScreen {
 
     private static final double WIDTH = 800;
     private static final double HEIGHT = 600;
-    private static final double SAFE_DISTANCE = 150;
+
 
     private final Scene scene;
     private final GraphicsContext gc;
@@ -85,8 +85,11 @@ public class GameScreen {
         ship.handleInput(keyboardInput);
         ship.update(dt);
         ship.wrap(WIDTH, HEIGHT);
-        
+
         for (Asteroid asteroid : asteroids) {
+            if (ship.collidesWith(asteroid)) {
+                ship.takeDamage();
+            }
             asteroid.update(dt);
             asteroid.wrap(WIDTH, HEIGHT);
         }
