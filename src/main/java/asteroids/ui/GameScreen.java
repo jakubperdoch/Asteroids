@@ -11,6 +11,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,11 +105,19 @@ public class GameScreen {
 
     private void render() {
         gc.drawImage(background, 0, 0, WIDTH, HEIGHT);
+        renderUI();
         for (Asteroid asteroid : asteroids) {
             asteroid.draw(gc);
         }
-
         ship.draw(gc);
+    }
+
+    private void renderUI() {
+        gc.save();
+        gc.setFill(javafx.scene.paint.Color.WHITE);
+        gc.setFont(new Font("Arial", 15));
+        gc.fillText("Health: " + ship.getHealth(), scene.getWidth() - 100, 30);
+        gc.restore();
     }
 
 }

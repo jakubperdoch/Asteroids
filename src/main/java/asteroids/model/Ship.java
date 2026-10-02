@@ -108,4 +108,8 @@ public class Ship extends GameObject {
             updateHealthImage(health);
         }
     }
+
+    public String getHealth() {
+        return String.valueOf(health);
+    }
 }

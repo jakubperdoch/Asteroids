@@ -85,10 +85,6 @@ public abstract class GameObject {
         return angle;
     }
 
-    public double getDirection() {
-        return angle;
-    }
-
     public double getX() {
         return x;
     }
