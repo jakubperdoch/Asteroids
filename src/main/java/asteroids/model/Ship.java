@@ -15,15 +15,15 @@ import java.util.Objects;
 public class Ship extends GameObject {
 
     private static final double SIZE = 70;
-    private static final double ROTATION_SPEED = 5;
+    private static final double ROTATION_SPEED = 200;
     private static final double MAX_SPEED = 500;
     private static final int MAX_HEALTH = 4;
     private static final double IMMUNITY_DURATION = 2.0;
-    private static final double KNOCKBACK_FORCE = 250;
     private static final double THRUST = 300;
+    private static final double KNOCKBACK_FORCE = 250;
 
     private double immunityTimer = 0;
-    private int rotationDirection = 0; // -1 for left, 1 for right, 0 for no rotation
+    private int rotationDirection = 0;
     private boolean movingForward = false;
     private int health = MAX_HEALTH;
 
@@ -33,12 +33,12 @@ public class Ship extends GameObject {
     }
 
     public void handleInput(KeyboardInput input) {
+        rotationDirection = 0;
         if (input.isPressed(KeyCode.LEFT)) {
             rotationDirection -= 1;
-        } else if (input.isPressed(KeyCode.RIGHT)) {
+        }
+        if (input.isPressed(KeyCode.RIGHT)) {
             rotationDirection += 1;
-        } else {
-            rotationDirection = 0;
         }
 
         movingForward = input.isPressed(KeyCode.UP);
@@ -72,9 +72,6 @@ public class Ship extends GameObject {
         super.draw(gc);
         if (movingForward) {
             gc.save();
-            if (immunityTimer > 0) {
-                gc.setGlobalAlpha((int) (immunityTimer * 5) % 2 == 0 ? 0.3 : 0.8);
-            }
             gc.translate(x, y);
             gc.rotate(getDrawAngle());
             gc.drawImage(new Image(Objects.requireNonNull(Ship.class.getResourceAsStream("/images/exhaust.png"))),
@@ -110,6 +107,5 @@ public class Ship extends GameObject {
         if (health > 0) {
             updateHealthImage(health);
         }
-        takeKnockBack(KNOCKBACK_FORCE, getDirection() + 180);
     }
 }

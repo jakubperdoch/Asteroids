@@ -21,6 +21,8 @@ public class GameScreen {
 
     private static final double WIDTH = 800;
     private static final double HEIGHT = 600;
+    private static final int SAFE_ZONE_RADIUS = 200;
+    private static final double KNOCKBACK_FORCE = 200;
 
 
     private final Scene scene;
@@ -77,6 +79,10 @@ public class GameScreen {
             AsteroidSize size = sizes[random.nextInt(sizes.length)];
             double rotationSpeed = random.nextDouble(-30, 30);
 
+            if (Math.sqrt(Math.pow(x - ship.getX(), 2) + Math.pow(y - ship.getY(), 2)) < SAFE_ZONE_RADIUS) {
+                continue;
+            }
+
             asteroids.add(new Asteroid(x, y, size, imageNumber, direction, rotationSpeed));
         }
     }
@@ -89,6 +95,7 @@ public class GameScreen {
         for (Asteroid asteroid : asteroids) {
             if (ship.collidesWith(asteroid)) {
                 ship.takeDamage();
+                ship.pushAwayFrom(asteroid);
             }
             asteroid.update(dt);
             asteroid.wrap(WIDTH, HEIGHT);
