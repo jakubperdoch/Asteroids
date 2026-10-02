@@ -1,9 +1,9 @@
 package asteroids.model;
 
 public enum AsteroidSize {
-    LARGE(40),
-    MEDIUM(25),
-    SMALL(12);
+    LARGE(55),
+    MEDIUM(45),
+    SMALL(30);
 
     private final double radius;
 

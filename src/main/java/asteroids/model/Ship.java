@@ -10,8 +10,8 @@ import java.util.Objects;
  */
 
 public class Ship extends GameObject {
-    
-    private static final double SIZE = 60;
+
+    private static final double SIZE = 70;
     private static final String IMAGE_PATH = "/images/ship/MainShip-FullHealth.png";
 
     public Ship(double x, double y) {
