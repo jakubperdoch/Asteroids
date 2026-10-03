@@ -1,5 +1,7 @@
 package asteroids.model;
 
+import javafx.geometry.Point2D;
+
 /**
  * Represents an enemy UFO in the game.
  */
@@ -7,7 +9,7 @@ package asteroids.model;
 public class Ufo extends GameObject {
 
     public Ufo(double x, double y) {
-        super(x, y, 30, 15, 0, null);
+        super(new Point2D(x, y), 30, 15, 0, null);
     }
 
 }

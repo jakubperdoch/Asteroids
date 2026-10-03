@@ -16,7 +16,7 @@ public class Asteroid extends GameObject {
     private final double rotationSpeed;
 
     public Asteroid(double x, double y, AsteroidSize size, int imageNumber, double direction, double rotationSpeed) {
-        super(x, y, size.getRadius() * 2, size.getRadius() * 2,
+        super(new Point2D(x, y), size.getRadius() * 2, size.getRadius() * 2,
                 0, new Image(Objects.requireNonNull(Asteroid.class.getResourceAsStream(IMAGE_PATH + imageNumber + ".png"))));
         this.size = size;
         this.rotationSpeed = rotationSpeed;

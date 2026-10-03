@@ -16,11 +16,11 @@ public abstract class GameObject {
     protected double width;
     protected double height;
     protected double angle;
-    protected Point2D velocity;
+    protected Point2D velocity = Point2D.ZERO;
     protected Image image;
 
-    protected GameObject(double x, double y, double width, double height, double angle, Image image) {
-        this.position = new Point2D(x, y);
+    protected GameObject(Point2D position, double width, double height, double angle, Image image) {
+        this.position = new Point2D(position.getX(), position.getY());
         this.width = width;
         this.height = height;
         this.angle = angle;
