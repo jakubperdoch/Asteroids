@@ -41,6 +41,10 @@ public class Ship extends GameObject {
     }
 
     public void handleInput(KeyboardInput input) {
+        if (isDestroyed()) {
+            movingForward = false;
+            return;
+        }
         rotationDirection = 0;
         if (input.isPressed(KeyCode.LEFT)) {
             rotationDirection -= 1;
@@ -130,6 +134,6 @@ public class Ship extends GameObject {
     }
 
     public boolean isDestroyed() {
-        return exploding && explosionTimer <= 0;
+        return health <= 0;
     }
 }
