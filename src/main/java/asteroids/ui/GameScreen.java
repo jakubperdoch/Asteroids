@@ -116,7 +116,8 @@ public class GameScreen {
     private void renderUI() {
         gc.save();
         gc.setFill(javafx.scene.paint.Color.WHITE);
-        gc.setFont(new Font("Arial", 15));
+        Font font = Font.loadFont(getClass().getResourceAsStream("/fonts/Orbitron.ttf"), 16);
+        gc.setFont(font);
         gc.fillText("Health: " + ship.getHealth(), scene.getWidth() - 100, 30);
         gc.restore();
     }
